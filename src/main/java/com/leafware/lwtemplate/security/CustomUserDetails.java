@@ -14,31 +14,19 @@ import java.util.stream.Collectors;
  */
 public class CustomUserDetails implements UserDetails {
 
-    private String email;
+    private String username;
 
     private String password;
 
     Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetails(User user) {
-        this.email = user.getEmail();
+        this.username = user.getUsername();
         this.password = user.getPassword();
 
-        this.authorities = user.getRoles().stream().map(rol -> {
-            return new SimpleGrantedAuthority(rol.getName());
+        this.authorities = user.getAuthorities().stream().map(authority -> {
+            return new SimpleGrantedAuthority(authority.getName());
         }).collect(Collectors.toSet());
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
@@ -53,7 +41,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override

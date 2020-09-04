@@ -19,3 +19,6 @@ spring:
 leaf:
     security:
         secret: secret
+
+server:
+    port: 8085
